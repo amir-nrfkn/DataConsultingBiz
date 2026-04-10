@@ -58,10 +58,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-main {
-  overflow: clip;
-}
-
 img,
 picture,
 video,

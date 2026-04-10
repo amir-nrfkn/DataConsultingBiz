@@ -14,22 +14,27 @@ import { deliverables, outOfScope, pricing } from '../data/offer';
     </div>
 
     <div class="deliverables__layout section-shell">
-      <div class="deliverables__scope">
-        <span class="deliverables__label">Included in the sprint</span>
-        <ul class="deliverables__list" role="list">
-          {deliverables.map((item) => (
-            <li class="deliverables__item">
-              <span class="deliverables__check" aria-hidden="true"></span>
-              <span class="deliverables__text">{item}</span>
-            </li>
-          ))}
-        </ul>
+      <div class="deliverables__scope-grid">
+        <div class="deliverables__scope">
+          <span class="deliverables__label">Included in the sprint</span>
+          <ul class="deliverables__list" role="list">
+            {deliverables.map((item) => (
+              <li class="deliverables__item">
+                <span class="deliverables__check" aria-hidden="true"></span>
+                <span class="deliverables__text">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div class="deliverables__exclusions">
           <span class="deliverables__label">Typically out of scope</span>
           <ul class="deliverables__exclusions-list" role="list">
             {outOfScope.map((item) => (
-              <li>{item}</li>
+              <li>
+                <span class="deliverables__x" aria-hidden="true">✕</span>
+                <span>{item}</span>
+              </li>
             ))}
           </ul>
         </div>
@@ -68,6 +73,19 @@ import { deliverables, outOfScope, pricing } from '../data/offer';
     padding: clamp(1.5rem, 4vw, 2.5rem);
   }
 
+  .deliverables__scope-grid {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.25rem);
+    align-items: start;
+    padding-bottom: clamp(1.5rem, 3vw, 2rem);
+    border-bottom: 1px solid rgba(29, 29, 31, 0.08);
+  }
+
+  .deliverables__scope,
+  .deliverables__exclusions {
+    min-width: 0;
+  }
+
   .deliverables__label {
     display: inline-flex;
     margin-bottom: var(--space-5);
@@ -75,7 +93,7 @@ import { deliverables, outOfScope, pricing } from '../data/offer';
     font-weight: var(--weight-semibold);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-text-soft);
+    color: #4b4b51;
   }
 
   .deliverables__list,
@@ -101,20 +119,29 @@ import { deliverables, outOfScope, pricing } from '../data/offer';
     flex-shrink: 0;
   }
 
-  .deliverables__exclusions {
-    margin-top: clamp(1.8rem, 4vw, 2.6rem);
-    padding-top: clamp(1.5rem, 3vw, 2rem);
-    border-top: 1px solid rgba(29, 29, 31, 0.08);
+  .deliverables__x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.85rem;
+    margin-top: 0.15rem;
+    color: var(--color-text-soft);
+    font-size: 0.82rem;
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    flex-shrink: 0;
   }
 
   .deliverables__pricing {
     display: grid;
-    gap: var(--space-4);
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    align-items: stretch;
   }
 
   .deliverables__price-card {
     display: grid;
     gap: var(--space-3);
+    min-height: 100%;
     padding: clamp(1.4rem, 3vw, 1.8rem);
     border-radius: calc(var(--radius-xl) - 10px);
     background: rgba(245, 245, 247, 0.9);
@@ -145,10 +172,37 @@ import { deliverables, outOfScope, pricing } from '../data/offer';
     background: rgba(255, 255, 255, 0.72);
   }
 
+  @media (min-width: 768px) {
+    .deliverables__scope-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .deliverables__pricing {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .deliverables__price-card {
+      min-height: 15rem;
+    }
+  }
+
   @media (min-width: 1024px) {
     .deliverables__layout {
-      grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.8fr);
-      align-items: start;
+      gap: clamp(2rem, 4vw, 3rem);
+      padding: clamp(2rem, 4vw, 2.75rem);
+    }
+
+    .deliverables__scope-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: clamp(2rem, 4vw, 3rem);
+    }
+
+    .deliverables__pricing {
+      column-gap: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .deliverables__price-card {
+      min-height: 16rem;
     }
   }
 </style>
