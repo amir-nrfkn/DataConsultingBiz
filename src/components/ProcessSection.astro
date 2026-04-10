@@ -1,177 +1,325 @@
 ---
-/**
- * ProcessSection.astro — "How the AI Data Foundation Sprint works."
- *
- * 5-step horizontal process flow on desktop with a connecting line
- * between steps. Stacks vertically on mobile with a vertical line.
- * Each step has a numbered badge, title, and description.
- */
 import { processSteps, offerName } from '../data/offer';
 ---
 
-<section class="process section" id="process" aria-labelledby="process-heading">
+<section class="process section" id="process" aria-labelledby="process-heading" data-process>
   <div class="process__inner container">
     <div class="process__header">
-      <h2 class="section-heading" id="process-heading">
-        How the {offerName} works
-      </h2>
+      <span class="eyebrow">Signature engagement</span>
+      <h2 class="section-heading" id="process-heading">How the {offerName} works</h2>
       <p class="section-subheading">
-        A structured engagement that takes you from messy, scattered data to a
-        trusted foundation with an AI analyst — in weeks, not months.
+        A structured engagement that moves from scattered source systems to one
+        trusted operating layer, with progress tied to the scroll instead of
+        buried inside a generic step grid.
       </p>
     </div>
 
-    <div class="process__steps">
-      {processSteps.map((item, index) => (
-        <div class="process__step">
-          <div class="process__step-badge" aria-hidden="true">
-            {item.step}
+    <div class="process__layout">
+      <aside class="process__rail-column" aria-hidden="true">
+        <div class="process__rail-sticky">
+          <div class="process__rail">
+            <div class="process__rail-track"></div>
+            <div class="process__rail-fill"></div>
+
+            <div class="process__node-list">
+              {processSteps.map((item, index) => (
+                <div
+                  class={`process__node ${index === 0 ? 'process__node--active' : ''}`}
+                  data-process-step
+                >
+                  <span class="process__node-badge">{item.step}</span>
+                  <span class="process__node-label">{item.title}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          {/* Connecting line between steps (not after the last step) */}
-          {index < processSteps.length - 1 && (
-            <div class="process__connector" aria-hidden="true"></div>
-          )}
-          <h3 class="process__step-title">{item.title}</h3>
-          <p class="process__step-desc">{item.description}</p>
         </div>
-      ))}
+      </aside>
+
+      <div class="process__panels">
+        {processSteps.map((item, index) => (
+          <article
+            class={`process__panel ${index === 0 ? 'process__panel--active' : ''}`}
+            data-process-panel
+          >
+            <div class="process__panel-card">
+              <span class="process__panel-step">{item.step}</span>
+              <h3>{item.title}</h3>
+              <p class="process__panel-lead">{item.description}</p>
+              <p class="process__panel-detail">{item.detail}</p>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
 <script>
-  // Text reveal scroll animation using IntersectionObserver
   document.addEventListener('DOMContentLoaded', () => {
-    const steps = document.querySelectorAll('.process__step');
-    
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('process__step--visible');
-            // optionally stop observing once revealed
-            // observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.2, // trigger when 20% visible
-        rootMargin: '0px 0px -10% 0px' 
+    const section = document.querySelector('[data-process]');
+    if (!section) return;
+
+    const panels = Array.from(section.querySelectorAll('[data-process-panel]'));
+    const nodes = Array.from(section.querySelectorAll('[data-process-step]'));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const setActive = (activeIndex) => {
+      panels.forEach((panel, index) => {
+        panel.classList.toggle('process__panel--active', index === activeIndex);
+        panel.classList.toggle('process__panel--past', index < activeIndex);
       });
 
-      steps.forEach(step => {
-        observer.observe(step);
+      nodes.forEach((node, index) => {
+        node.classList.toggle('process__node--active', index === activeIndex);
+        node.classList.toggle('process__node--past', index < activeIndex);
       });
+    };
+
+    const updateProgress = () => {
+      if (prefersReducedMotion || window.innerWidth < 960) {
+        section.style.setProperty('--section-progress', '1');
+        return;
+      }
+
+      const rect = section.getBoundingClientRect();
+      const total = Math.max(section.offsetHeight - window.innerHeight, 1);
+      const progress = Math.min(Math.max((-rect.top) / total, 0), 1);
+      section.style.setProperty('--section-progress', progress.toFixed(4));
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visibleEntries[0]) {
+          const nextIndex = panels.indexOf(visibleEntries[0].target);
+          if (nextIndex >= 0) {
+            setActive(nextIndex);
+          }
+        }
+      }, {
+        threshold: [0.25, 0.5, 0.75],
+        rootMargin: '-30% 0px -30% 0px',
+      });
+
+      panels.forEach((panel) => observer.observe(panel));
     } else {
-      // Fallback for older browsers
-      steps.forEach(step => step.classList.add('process__step--visible'));
+      panels.forEach((panel) => panel.classList.add('process__panel--active'));
+      nodes.forEach((node) => node.classList.add('process__node--active'));
     }
+
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
   });
 </script>
 
 <style>
+  .process {
+    --section-progress: 0;
+  }
+
   .process__header {
-    margin-bottom: var(--space-12);
+    max-width: 760px;
+    margin-bottom: clamp(2rem, 5vw, 4rem);
   }
 
-  /* ─── Mobile: vertical flow ─── */
-  .process__steps {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-10);
-    position: relative;
+  .process__header .eyebrow {
+    margin-bottom: var(--space-4);
   }
 
-  .process__step {
-    position: relative;
-    padding-left: calc(var(--space-12) + var(--space-4));
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  .process__layout {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3rem);
   }
 
-  .process__step--visible {
+  .process__rail-column {
+    display: none;
+  }
+
+  .process__panels {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .process__panel {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 
-  .process__step-badge {
-    position: absolute;
-    left: 0;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-full);
-    background-color: var(--color-accent);
-    color: var(--color-text-inverse);
-    font-size: var(--text-lg);
-    font-weight: var(--weight-bold);
-    z-index: 1;
+  .process__panel-card {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-light);
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: var(--shadow-sm);
   }
 
-  /* Vertical connecting line (mobile) */
-  .process__connector {
-    position: absolute;
-    left: 21px;
-    top: 44px;
-    width: 2px;
-    height: calc(var(--space-10) + 4px);
-    background: linear-gradient(to bottom, var(--color-accent), var(--color-border));
-  }
-
-  .process__step-title {
-    font-size: var(--text-lg);
-    font-weight: var(--weight-semibold);
-    margin-bottom: var(--space-2);
-  }
-
-  .process__step-desc {
+  .process__panel-step {
+    display: inline-flex;
+    margin-bottom: var(--space-4);
     font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    line-height: var(--leading-relaxed);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
   }
 
-  /* ─── Desktop overrides for vertical layout ─── */
-  @media (min-width: 1024px) {
-    .process__header {
-      text-align: center;
-      margin-inline: auto;
+  .process__panel-card h3 {
+    font-size: clamp(1.75rem, 3vw, 2.6rem);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-4);
+  }
+
+  .process__panel-lead {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: var(--color-text);
+    margin-bottom: var(--space-4);
+    max-width: 30ch;
+  }
+
+  .process__panel-detail {
+    color: var(--color-text-muted);
+    max-width: 40ch;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 960px) {
+    .process__layout {
+      grid-template-columns: minmax(17rem, 24rem) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .process__rail-column {
+      display: block;
+      position: relative;
+    }
+
+    .process__rail-sticky {
+      position: sticky;
+      top: 6.5rem;
+      height: calc(100vh - 8.5rem);
+    }
+
+    .process__rail {
+      position: relative;
+      height: 100%;
+      padding-block: 1rem;
+    }
+
+    .process__rail-track,
+    .process__rail-fill {
+      position: absolute;
+      left: 1.55rem;
+      top: 1.1rem;
+      bottom: 1.1rem;
+      width: 2px;
+      border-radius: var(--radius-full);
+    }
+
+    .process__rail-track {
+      background: rgba(29, 29, 31, 0.1);
+    }
+
+    .process__rail-fill {
+      background: linear-gradient(180deg, rgba(0, 113, 227, 0.3) 0%, rgba(0, 113, 227, 1) 100%);
+      transform-origin: top;
+      transform: scaleY(var(--section-progress));
+      transition: transform 120ms linear;
+    }
+
+    .process__node-list {
+      height: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
     }
 
-    .process__steps {
-      max-width: 600px;
-      margin: 0 auto;
-      padding-block: var(--space-10);
+    .process__node {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: var(--space-4);
+      color: var(--color-text-soft);
+      transition: color var(--transition-base), transform var(--transition-base);
     }
-    
-    /* On desktop, keep the vertical flow but center the line */
-    .process__step {
-      padding-left: calc(70px + var(--space-6));
+
+    .process__node-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.1rem;
+      height: 3.1rem;
+      border-radius: 50%;
+      border: 1px solid rgba(29, 29, 31, 0.12);
+      background: rgba(255, 255, 255, 0.86);
+      font-weight: var(--weight-semibold);
+      letter-spacing: -0.02em;
+      box-shadow: 0 10px 30px -28px rgba(6, 24, 44, 0.4);
     }
-    
-    .process__step-badge {
-      width: 60px;
-      height: 60px;
-      font-size: var(--text-xl);
+
+    .process__node-label {
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      max-width: 14ch;
     }
-    
-    .process__connector {
-      left: 29px;
-      top: 60px;
-      height: calc(var(--space-10) + var(--space-4));
+
+    .process__node--past,
+    .process__node--active {
+      color: var(--color-text);
     }
-    
-    .process__step-title {
-      font-size: var(--text-2xl);
+
+    .process__node--active {
+      transform: translateX(0.25rem);
     }
-    
-    .process__step-desc {
-      font-size: var(--text-base);
+
+    .process__node--past .process__node-badge,
+    .process__node--active .process__node-badge {
+      border-color: rgba(0, 113, 227, 0.22);
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    .process__node--active .process__node-badge {
+      color: var(--color-accent);
+      box-shadow: 0 20px 45px -30px rgba(0, 113, 227, 0.9);
+    }
+
+    .process__panels {
+      gap: 0;
+    }
+
+    .process__panel {
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      opacity: 0.26;
+      transform: translateX(2rem);
+      transition: opacity var(--transition-slow), transform var(--transition-slow);
+    }
+
+    .process__panel--past {
+      opacity: 0.58;
+      transform: translateX(0);
+    }
+
+    .process__panel--active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process__panel {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .process__rail-fill {
+      transform: scaleY(1) !important;
     }
   }
 </style>

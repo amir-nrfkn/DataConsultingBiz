@@ -1,94 +1,133 @@
 ---
-/**
- * IdealClientSection.astro — "Best fit for companies that have
- * outgrown spreadsheets but not yet built a real data layer."
- *
- * Checklist-style list of 7 fit criteria with checkmark icons.
- * Helps prospects self-qualify before reaching the contact form.
- */
-import { fitCriteria } from '../data/offer';
+import { closeCta, fitCriteria } from '../data/offer';
+import { site } from '../data/site';
+
+const isExternalBooking = site.bookingUrl.startsWith('http');
 ---
 
 <section class="fit section" id="fit" aria-labelledby="fit-heading">
   <div class="fit__inner container">
-    <div class="fit__header">
-      <h2 class="section-heading" id="fit-heading">
-        Best fit for companies that have outgrown spreadsheets but not yet
-        built a real data layer
-      </h2>
-      <p class="section-subheading">
-        This engagement works best when your company matches most of these criteria.
-      </p>
-    </div>
+    <div class="fit__layout section-shell">
+      <div class="fit__content">
+        <span class="eyebrow">Best fit</span>
+        <h2 class="section-heading" id="fit-heading">
+          Best for companies that have outgrown spreadsheets but do not yet have a real data foundation
+        </h2>
+        <p class="section-subheading">
+          This engagement works best when your business matches most of the
+          criteria below and wants practical AI built on top of clean
+          operating data.
+        </p>
 
-    <div class="fit__content">
-      <div class="fit__label">Is this you?</div>
-      <ul class="fit__list" role="list">
-        {fitCriteria.map((item) => (
-          <li class="fit__item">
-            <span class="fit__check" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <rect x="1" y="1" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M7 11.5l2.5 2.5 5.5-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span class="fit__text">{item}</span>
-          </li>
-        ))}
-      </ul>
+        <ul class="fit__list" role="list">
+          {fitCriteria.map((item) => (
+            <li class="fit__item">
+              <span class="fit__check" aria-hidden="true"></span>
+              <span class="fit__text">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <aside class="fit__cta">
+        <span class="fit__label">{closeCta.eyebrow}</span>
+        <h3>{closeCta.title}</h3>
+        <p>{closeCta.description}</p>
+        <div class="fit__actions">
+          <a
+            href={site.bookingUrl}
+            class="btn btn-primary"
+            target={isExternalBooking ? '_blank' : undefined}
+            rel={isExternalBooking ? 'noreferrer' : undefined}
+          >
+            {site.bookingLabel}
+          </a>
+          <a href="#contact" class="btn btn-secondary">Send your details</a>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
 
 <style>
-  .fit__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  .fit__layout {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.75rem);
+    padding: clamp(1.5rem, 4vw, 2.6rem);
   }
 
-  .fit__header {
-    margin-bottom: var(--space-10);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .fit__content .eyebrow {
+    margin-bottom: var(--space-4);
   }
 
-  .fit__content {
-    max-width: 600px;
+  .fit__content .section-subheading {
+    margin-bottom: var(--space-8);
   }
 
   .fit__label {
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     font-weight: var(--weight-semibold);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-accent);
-    margin-bottom: var(--space-6);
+    color: var(--color-text-soft);
+    margin-bottom: var(--space-4);
   }
 
   .fit__list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
+    display: grid;
+    gap: var(--space-4);
   }
 
   .fit__item {
     display: flex;
-    align-items: center;
-    gap: var(--space-4);
+    align-items: flex-start;
+    gap: var(--space-3);
   }
 
   .fit__check {
+    width: 0.65rem;
+    height: 0.65rem;
+    margin-top: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-accent);
     flex-shrink: 0;
-    color: var(--color-accent);
-    display: flex;
   }
 
   .fit__text {
     font-size: var(--text-base);
-    line-height: var(--leading-normal);
-    font-weight: var(--weight-medium);
+    line-height: 1.55;
+    color: var(--color-text-muted);
+  }
+
+  .fit__cta {
+    padding: clamp(1.4rem, 3vw, 1.8rem);
+    border-radius: calc(var(--radius-xl) - 10px);
+    background: linear-gradient(180deg, rgba(0, 113, 227, 0.08) 0%, rgba(255, 255, 255, 0.72) 100%);
+    border: 1px solid rgba(0, 113, 227, 0.12);
+    align-self: start;
+  }
+
+  .fit__cta h3 {
+    font-size: clamp(1.6rem, 2.7vw, 2.35rem);
+    letter-spacing: -0.04em;
+    margin-bottom: var(--space-4);
+  }
+
+  .fit__cta p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .fit__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 1024px) {
+    .fit__layout {
+      grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.85fr);
+      align-items: start;
+    }
   }
 </style>

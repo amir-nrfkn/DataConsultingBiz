@@ -1,19 +1,10 @@
 ---
-/**
- * index.astro — Homepage for Veylor Advisory.
- *
- * Assembles all 12 homepage sections in the correct order inside
- * BaseLayout. Passes SEO props and JSON-LD structured data schemas
- * (Organization, Service, FAQPage) for search engine / AI visibility.
- */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import TrustStrip from '../components/TrustStrip.astro';
-import ProblemSection from '../components/ProblemSection.astro';
+import CapabilitySection from '../components/CapabilitySection.astro';
 import ProcessSection from '../components/ProcessSection.astro';
-import DeliverablesSection from '../components/DeliverablesSection.astro';
 import ExamplesSection from '../components/ExamplesSection.astro';
-import TechnologySection from '../components/TechnologySection.astro';
+import DeliverablesSection from '../components/DeliverablesSection.astro';
 import IdealClientSection from '../components/IdealClientSection.astro';
 import FAQSection from '../components/FAQSection.astro';
 import ContactFormSection from '../components/ContactFormSection.astro';
@@ -39,12 +30,10 @@ const schemas = [
 
 <BaseLayout seo={seo} schemas={schemas}>
   <Hero />
-  <TrustStrip />
-  <ProblemSection />
+  <CapabilitySection />
   <ProcessSection />
-  <DeliverablesSection />
   <ExamplesSection />
-  <TechnologySection />
+  <DeliverablesSection />
   <IdealClientSection />
   <FAQSection />
   <ContactFormSection />

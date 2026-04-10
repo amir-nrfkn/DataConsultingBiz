@@ -1,223 +1,154 @@
 ---
-/**
- * DeliverablesSection.astro — "What we deliver" section.
- *
- * Lists the 7 deliverables with check icons. Includes an expandable
- * "What's not included" accordion using native <details>/<summary>
- * (no JS needed). Pricing block at the bottom.
- */
 import { deliverables, outOfScope, pricing } from '../data/offer';
 ---
 
-<section class="deliverables section section--alt" id="deliverables" aria-labelledby="deliverables-heading">
+<section class="deliverables section" id="deliverables" aria-labelledby="deliverables-heading">
   <div class="deliverables__inner container">
     <div class="deliverables__header">
-      <h2 class="section-heading" id="deliverables-heading">What we deliver</h2>
+      <span class="eyebrow">Scope and pricing</span>
+      <h2 class="section-heading" id="deliverables-heading">A focused engagement with a clear finish line</h2>
       <p class="section-subheading">
-        A clearly scoped engagement with tangible outputs — not an open-ended retainer.
+        This is designed to create a durable operating layer, not an open-ended
+        consulting loop. The scope stays tight enough to move quickly.
       </p>
     </div>
 
-    <!-- Deliverable checklist -->
-    <ul class="deliverables__list" role="list">
-      {deliverables.map((item) => (
-        <li class="deliverables__item">
-          <span class="deliverables__check" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M6.5 10.5l2 2 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <span class="deliverables__text">{item}</span>
-        </li>
-      ))}
-    </ul>
+    <div class="deliverables__layout section-shell">
+      <div class="deliverables__scope">
+        <span class="deliverables__label">Included in the sprint</span>
+        <ul class="deliverables__list" role="list">
+          {deliverables.map((item) => (
+            <li class="deliverables__item">
+              <span class="deliverables__check" aria-hidden="true"></span>
+              <span class="deliverables__text">{item}</span>
+            </li>
+          ))}
+        </ul>
 
-    <!-- Out of scope accordion -->
-    <details class="deliverables__exclusions">
-      <summary class="deliverables__exclusions-toggle">
-        <span>What's not included</span>
-        <span class="deliverables__exclusions-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </summary>
-      <ul class="deliverables__exclusions-list" role="list">
-        {outOfScope.map((item) => (
-          <li class="deliverables__exclusion-item">
-            <span class="deliverables__x" aria-hidden="true">✕</span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </details>
-
-    <!-- Pricing block -->
-    <div class="deliverables__pricing">
-      <div class="deliverables__price-card">
-        <span class="deliverables__price-label">Setup</span>
-        <span class="deliverables__price-value">{pricing.setup}</span>
+        <div class="deliverables__exclusions">
+          <span class="deliverables__label">Typically out of scope</span>
+          <ul class="deliverables__exclusions-list" role="list">
+            {outOfScope.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <div class="deliverables__price-divider" aria-hidden="true"></div>
-      <div class="deliverables__price-card">
-        <span class="deliverables__price-label">{pricing.ongoingNote}</span>
-        <span class="deliverables__price-value">{pricing.ongoing}</span>
+
+      <div class="deliverables__pricing">
+        <div class="deliverables__price-card">
+          <span class="deliverables__price-label">{pricing.setupLabel}</span>
+          <span class="deliverables__price-value">{pricing.setup}</span>
+          <p>Designed to get the foundation in place without turning into a long implementation program.</p>
+        </div>
+
+        <div class="deliverables__price-card deliverables__price-card--secondary">
+          <span class="deliverables__price-label">{pricing.supportLabel}</span>
+          <span class="deliverables__price-value">{pricing.ongoing}</span>
+          <p>{pricing.ongoingNote}</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .deliverables__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
   .deliverables__header {
-    margin-bottom: var(--space-10);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 760px;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
   }
 
-  /* ─── Checklist ─── */
-  .deliverables__list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-    margin-bottom: var(--space-10);
-    max-width: 680px;
+  .deliverables__header .eyebrow {
+    margin-bottom: var(--space-4);
   }
 
-  .deliverables__item {
+  .deliverables__layout {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.8rem);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .deliverables__label {
+    display: inline-flex;
+    margin-bottom: var(--space-5);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-soft);
+  }
+
+  .deliverables__list,
+  .deliverables__exclusions-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .deliverables__item,
+  .deliverables__exclusions-list li {
     display: flex;
-    align-items: flex-start;
     gap: var(--space-3);
+    color: var(--color-text-muted);
+    line-height: 1.55;
   }
 
   .deliverables__check {
+    width: 0.65rem;
+    height: 0.65rem;
+    margin-top: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-accent);
     flex-shrink: 0;
-    color: var(--color-accent);
-    margin-top: 1px;
   }
 
-  .deliverables__text {
-    font-size: var(--text-base);
-    line-height: var(--leading-normal);
-  }
-
-  /* ─── Exclusions accordion ─── */
   .deliverables__exclusions {
-    max-width: 680px;
-    margin-bottom: var(--space-12);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
-    overflow: hidden;
+    margin-top: clamp(1.8rem, 4vw, 2.6rem);
+    padding-top: clamp(1.5rem, 3vw, 2rem);
+    border-top: 1px solid rgba(29, 29, 31, 0.08);
   }
 
-  .deliverables__exclusions-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-4) var(--space-6);
-    font-size: var(--text-base);
-    font-weight: var(--weight-medium);
-    color: var(--color-text-muted);
-    cursor: pointer;
-    list-style: none;
-    user-select: none;
-  }
-
-  /* Remove default marker in Safari / Chrome */
-  .deliverables__exclusions-toggle::-webkit-details-marker {
-    display: none;
-  }
-
-  .deliverables__exclusions-icon {
-    transition: transform var(--transition-base);
-    display: flex;
-  }
-
-  .deliverables__exclusions[open] .deliverables__exclusions-icon {
-    transform: rotate(180deg);
-  }
-
-  .deliverables__exclusions-list {
-    padding: 0 var(--space-6) var(--space-5);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
-  .deliverables__exclusion-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-  }
-
-  .deliverables__x {
-    font-size: var(--text-xs);
-    color: #c0392b;
-    flex-shrink: 0;
-  }
-
-  /* ─── Pricing ─── */
   .deliverables__pricing {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--space-4);
-    max-width: 480px;
-    padding: var(--space-8);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
   }
 
   .deliverables__price-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
+    display: grid;
+    gap: var(--space-3);
+    padding: clamp(1.4rem, 3vw, 1.8rem);
+    border-radius: calc(var(--radius-xl) - 10px);
+    background: rgba(245, 245, 247, 0.9);
+    border: 1px solid rgba(29, 29, 31, 0.06);
   }
 
   .deliverables__price-label {
     font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    text-transform: capitalize;
+    color: var(--color-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: var(--weight-semibold);
   }
 
   .deliverables__price-value {
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-bold);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: var(--weight-semibold);
+    letter-spacing: -0.04em;
     color: var(--color-text);
   }
 
-  .deliverables__price-divider {
-    height: 1px;
-    background: var(--color-border);
+  .deliverables__price-card p {
+    color: var(--color-text-muted);
+    max-width: 26ch;
   }
 
-  @media (min-width: 640px) {
-    .deliverables__pricing {
-      flex-direction: row;
-      align-items: center;
-      max-width: 540px;
-    }
+  .deliverables__price-card--secondary {
+    background: rgba(255, 255, 255, 0.72);
+  }
 
-    .deliverables__price-card {
-      flex: 1;
-    }
-
-    .deliverables__price-divider {
-      width: 1px;
-      height: 48px;
-      flex-shrink: 0;
+  @media (min-width: 1024px) {
+    .deliverables__layout {
+      grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.8fr);
+      align-items: start;
     }
   }
 </style>

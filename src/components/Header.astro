@@ -1,20 +1,11 @@
 ---
-/**
- * Header.astro — Sticky site header with navigation and CTA.
- *
- * Features:
- * - SVG text wordmark for "Veylor Advisory"
- * - Nav links as anchor links to homepage sections
- * - Primary CTA button ("Book a Discovery Call")
- * - Mobile hamburger menu with accessible toggle
- * - Backdrop blur + subtle border on scroll (via small inline script)
- */
 import { site } from '../data/site';
+
+const isExternalBooking = site.bookingUrl.startsWith('http');
 ---
 
 <header class="header" id="site-header">
   <div class="header__inner container">
-    <!-- Wordmark / logo -->
     <a href="/" class="header__logo" aria-label={`${site.name} — Home`}>
       <svg
         class="header__wordmark"
@@ -38,21 +29,26 @@ import { site } from '../data/site';
       </svg>
     </a>
 
-    <!-- Desktop navigation -->
     <nav class="header__nav" aria-label="Main navigation">
       <ul class="header__nav-list" role="list">
+        <li><a href="#approach" class="header__nav-link">Approach</a></li>
         <li><a href="#process" class="header__nav-link">How It Works</a></li>
-        <li><a href="#examples" class="header__nav-link">Examples</a></li>
+        <li><a href="#examples" class="header__nav-link">Outcomes</a></li>
         <li><a href="#faq" class="header__nav-link">FAQ</a></li>
         <li><a href="#contact" class="header__nav-link">Contact</a></li>
       </ul>
     </nav>
 
-    <!-- CTA + mobile toggle -->
     <div class="header__actions">
-      <a href="#contact" class="btn btn-primary header__cta">Book a Discovery Call</a>
+      <a
+        href={site.bookingUrl}
+        class="btn btn-primary header__cta"
+        target={isExternalBooking ? '_blank' : undefined}
+        rel={isExternalBooking ? 'noreferrer' : undefined}
+      >
+        {site.bookingLabel}
+      </a>
 
-      <!-- Mobile hamburger button -->
       <button
         class="header__hamburger"
         id="mobile-menu-toggle"
@@ -68,34 +64,38 @@ import { site } from '../data/site';
     </div>
   </div>
 
-  <!-- Mobile menu -->
   <div class="header__mobile-menu" id="mobile-menu" aria-hidden="true">
     <nav aria-label="Mobile navigation">
       <ul class="header__mobile-list" role="list">
+        <li><a href="#approach" class="header__mobile-link">Approach</a></li>
         <li><a href="#process" class="header__mobile-link">How It Works</a></li>
-        <li><a href="#examples" class="header__mobile-link">Examples</a></li>
+        <li><a href="#examples" class="header__mobile-link">Outcomes</a></li>
         <li><a href="#faq" class="header__mobile-link">FAQ</a></li>
         <li><a href="#contact" class="header__mobile-link">Contact</a></li>
       </ul>
-      <a href="#contact" class="btn btn-primary header__mobile-cta">Book a Discovery Call</a>
+      <a
+        href={site.bookingUrl}
+        class="btn btn-primary header__mobile-cta"
+        target={isExternalBooking ? '_blank' : undefined}
+        rel={isExternalBooking ? 'noreferrer' : undefined}
+      >
+        {site.bookingLabel}
+      </a>
     </nav>
   </div>
 </header>
 
-<!-- Minimal inline script for scroll detection + mobile menu toggle. -->
 <script>
   const header = document.getElementById('site-header');
   const toggleBtn = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  /* Add "scrolled" class to header after 10px of scroll for visual treatment. */
   if (header) {
     window.addEventListener('scroll', () => {
       header.classList.toggle('header--scrolled', window.scrollY > 10);
     }, { passive: true });
   }
 
-  /* Toggle mobile menu open/close. */
   if (toggleBtn && mobileMenu) {
     toggleBtn.addEventListener('click', () => {
       const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
@@ -105,7 +105,6 @@ import { site } from '../data/site';
       toggleBtn.classList.toggle('header__hamburger--active', !isOpen);
     });
 
-    /* Close mobile menu when a link inside it is clicked. */
     mobileMenu.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         toggleBtn.setAttribute('aria-expanded', 'false');
@@ -118,22 +117,20 @@ import { site } from '../data/site';
 </script>
 
 <style>
-  /* ─── Sticky header ─── */
   .header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background-color: rgba(3, 4, 94, 0.85); /* #03045e */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: rgba(251, 251, 253, 0.7);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border-bottom: 1px solid transparent;
-    transition: border-color var(--transition-base),
-                background-color var(--transition-base);
+    transition: border-color var(--transition-base), background-color var(--transition-base);
   }
 
   .header--scrolled {
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-    background-color: rgba(3, 4, 94, 0.95);
+    border-bottom-color: rgba(29, 29, 31, 0.08);
+    background-color: rgba(251, 251, 253, 0.88);
   }
 
   .header__inner {
@@ -143,16 +140,15 @@ import { site } from '../data/site';
     height: 72px;
   }
 
-  /* ─── Wordmark ─── */
   .header__logo {
     display: flex;
     align-items: center;
-    color: #FFFFFF;
+    color: var(--color-text);
     text-decoration: none;
   }
 
   .header__logo:hover {
-    color: #FFFFFF;
+    color: var(--color-text);
   }
 
   .header__wordmark {
@@ -160,7 +156,6 @@ import { site } from '../data/site';
     width: auto;
   }
 
-  /* ─── Desktop nav ─── */
   .header__nav {
     display: none;
   }
@@ -173,17 +168,16 @@ import { site } from '../data/site';
   .header__nav-link {
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--color-text-muted);
     text-decoration: none;
     padding: var(--space-2) 0;
     transition: color var(--transition-fast);
   }
 
   .header__nav-link:hover {
-    color: #FFFFFF;
+    color: var(--color-text);
   }
 
-  /* ─── Actions ─── */
   .header__actions {
     display: flex;
     align-items: center;
@@ -192,15 +186,8 @@ import { site } from '../data/site';
 
   .header__cta {
     display: none;
-    background-color: #FFFFFF;
-    color: #03045E;
-  }
-  .header__cta:hover {
-    background-color: var(--color-surface-alt);
-    color: #03045E;
   }
 
-  /* ─── Hamburger button ─── */
   .header__hamburger {
     display: flex;
     flex-direction: column;
@@ -218,12 +205,11 @@ import { site } from '../data/site';
     display: block;
     width: 100%;
     height: 2px;
-    background-color: #FFFFFF;
+    background-color: var(--color-text);
     border-radius: 1px;
     transition: transform var(--transition-fast), opacity var(--transition-fast);
   }
 
-  /* Animated X when open */
   .header__hamburger--active .header__hamburger-line:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
@@ -236,12 +222,11 @@ import { site } from '../data/site';
     transform: translateY(-7px) rotate(-45deg);
   }
 
-  /* ─── Mobile menu ─── */
   .header__mobile-menu {
     display: none;
     padding: var(--space-6) var(--container-padding) var(--space-8);
-    background-color: #03045E;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(251, 251, 253, 0.96);
+    border-bottom: 1px solid rgba(29, 29, 31, 0.08);
   }
 
   .header__mobile-menu--open {
@@ -258,32 +243,23 @@ import { site } from '../data/site';
   .header__mobile-link {
     display: block;
     padding: var(--space-3) var(--space-4);
-    font-size: var(--text-lg);
+    border-radius: var(--radius-lg);
+    color: var(--color-text);
+    font-size: var(--text-base);
     font-weight: var(--weight-medium);
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    border-radius: var(--radius-md);
-    transition: background-color var(--transition-fast);
   }
 
   .header__mobile-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #FFFFFF;
+    background: rgba(29, 29, 31, 0.04);
+    color: var(--color-text);
   }
 
   .header__mobile-cta {
     width: 100%;
-    text-align: center;
-    background-color: #FFFFFF;
-    color: #03045E;
-  }
-  .header__mobile-cta:hover {
-    background-color: var(--color-surface-alt);
-    color: #03045E;
+    margin-top: var(--space-2);
   }
 
-  /* ─── Desktop breakpoint (768px+) ─── */
-  @media (min-width: 768px) {
+  @media (min-width: 960px) {
     .header__nav {
       display: block;
     }
@@ -292,10 +268,7 @@ import { site } from '../data/site';
       display: inline-flex;
     }
 
-    .header__hamburger {
-      display: none;
-    }
-
+    .header__hamburger,
     .header__mobile-menu {
       display: none !important;
     }

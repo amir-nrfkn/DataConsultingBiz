@@ -22,6 +22,16 @@ export const site = {
   /** Contact email (placeholder — update before launch). */
   email: 'hello@veyloradvisory.com',
 
+  /**
+   * Booking CTA target.
+   * Replace with the real scheduler URL before launch. For now it falls back
+   * to the on-page inquiry section so review builds keep a working path.
+   */
+  bookingUrl: '#contact',
+
+  /** Label used anywhere the primary booking CTA appears. */
+  bookingLabel: 'Book a Discovery Call',
+
   /** LinkedIn company page (placeholder — update before launch). */
   linkedin: 'https://linkedin.com/company/veylor-advisory',
 
@@ -31,9 +41,9 @@ export const site = {
 
   /** Default meta description for pages that don't set their own. */
   defaultDescription:
-    'Veylor Advisory connects, cleans, and validates business data so reporting becomes reliable and your AI analyst can work on trusted numbers.',
+    'Veylor Advisory helps growing companies unify messy operational data into one trusted foundation for reliable reporting and practical internal AI.',
 
   /** One-sentence offer used in the footer and structured data. */
   tagline:
-    'We connect, clean, and validate your business data so reporting becomes reliable and your AI analyst can work on trusted numbers.',
+    'We build trusted data foundations so reporting gets faster, numbers get cleaner, and internal AI can work on the truth.',
 } as const;
