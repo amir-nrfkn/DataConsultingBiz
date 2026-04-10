@@ -1,0 +1,107 @@
+---
+/**
+ * FAQSection.astro — Frequently asked questions.
+ *
+ * 8 FAQ items rendered as native <details>/<summary> accordions.
+ * Clean open/close CSS animation. No JS required.
+ * FAQ data is imported from faq.ts, shared with JSON-LD generation.
+ */
+import { faqItems } from '../data/faq';
+---
+
+<section class="faq section section--alt" id="faq" aria-labelledby="faq-heading">
+  <div class="faq__inner container">
+    <div class="faq__header">
+      <h2 class="section-heading" id="faq-heading">
+        Frequently asked questions
+      </h2>
+    </div>
+
+    <div class="faq__list">
+      {faqItems.map((item, index) => (
+        <details class="faq__item" id={`faq-${index + 1}`}>
+          <summary class="faq__question">
+            <span class="faq__question-text">{item.question}</span>
+            <span class="faq__chevron" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M4.5 6.75l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="faq__answer">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__header {
+    margin-bottom: var(--space-10);
+  }
+
+  .faq__list {
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .faq__item:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__question-text {
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+  }
+
+  .faq__chevron {
+    display: flex;
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+    transition: transform var(--transition-base);
+  }
+
+  .faq__item[open] .faq__chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq__answer {
+    padding-bottom: var(--space-6);
+  }
+
+  .faq__answer p {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    max-width: 64ch;
+  }
+
+  @media (min-width: 768px) {
+    .faq__question-text {
+      font-size: var(--text-lg);
+    }
+  }
+</style>

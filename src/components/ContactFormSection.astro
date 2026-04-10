@@ -1,0 +1,294 @@
+---
+/**
+ * ContactFormSection.astro — Netlify lead capture form.
+ *
+ * Headline: "See whether your systems are ready for an AI-powered analyst"
+ * Uses native Netlify form handling with honeypot spam protection.
+ * All fields have proper labels, required attributes, and accessible markup.
+ * Redirects to /thank-you on successful submission.
+ */
+---
+
+<section class="contact section section--alt" id="contact" aria-labelledby="contact-heading">
+  <div class="contact__inner container">
+    <div class="contact__header">
+      <h2 class="section-heading" id="contact-heading">
+        See whether your systems are ready for an AI-powered analyst
+      </h2>
+      <p class="section-subheading">
+        Tell us about your current setup and the reporting challenges you face.
+        We'll review your details and reply personally.
+      </p>
+    </div>
+
+    <form
+      class="contact__form"
+      name="lead-capture"
+      method="POST"
+      action="/thank-you"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      id="lead-capture-form"
+    >
+      <!-- Honeypot field — hidden from real users, catches bots -->
+      <p class="sr-only" aria-hidden="true">
+        <label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+      </p>
+
+      <!-- Required hidden input for Netlify form detection -->
+      <input type="hidden" name="form-name" value="lead-capture" />
+
+      <div class="contact__fields">
+        <!-- Name -->
+        <div class="contact__field">
+          <label for="contact-name" class="contact__label">
+            Name <span class="contact__required" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="contact-name"
+            required
+            autocomplete="name"
+            placeholder="Your full name"
+            class="contact__input"
+          />
+        </div>
+
+        <!-- Work email -->
+        <div class="contact__field">
+          <label for="contact-email" class="contact__label">
+            Work email <span class="contact__required" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="contact-email"
+            required
+            autocomplete="email"
+            placeholder="you@company.com"
+            class="contact__input"
+          />
+        </div>
+
+        <!-- Company name -->
+        <div class="contact__field">
+          <label for="contact-company" class="contact__label">
+            Company name <span class="contact__required" aria-hidden="true">*</span>
+          </label>
+          <input
+            type="text"
+            name="company"
+            id="contact-company"
+            required
+            autocomplete="organization"
+            placeholder="Your company"
+            class="contact__input"
+          />
+        </div>
+
+        <!-- Company size -->
+        <div class="contact__field">
+          <label for="contact-size" class="contact__label">
+            Company size <span class="contact__required" aria-hidden="true">*</span>
+          </label>
+          <select name="company-size" id="contact-size" required class="contact__input contact__select">
+            <option value="" disabled selected>Select range</option>
+            <option value="1-49">1–49 employees</option>
+            <option value="50-100">50–100 employees</option>
+            <option value="101-200">101–200 employees</option>
+            <option value="201-500">201–500 employees</option>
+            <option value="500+">500+ employees</option>
+          </select>
+        </div>
+
+        <!-- Industry -->
+        <div class="contact__field">
+          <label for="contact-industry" class="contact__label">
+            Industry <span class="contact__required" aria-hidden="true">*</span>
+          </label>
+          <select name="industry" id="contact-industry" required class="contact__input contact__select">
+            <option value="" disabled selected>Select industry</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="ecommerce">E-commerce / DTC</option>
+            <option value="retail">Retail</option>
+            <option value="distribution">Distribution / Wholesale</option>
+            <option value="services">Professional Services</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <!-- Phone (optional) -->
+        <div class="contact__field">
+          <label for="contact-phone" class="contact__label">
+            Phone <span class="contact__optional">(optional)</span>
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            id="contact-phone"
+            autocomplete="tel"
+            placeholder="+1 (555) 000-0000"
+            class="contact__input"
+          />
+        </div>
+
+        <!-- Current systems (full width) -->
+        <div class="contact__field contact__field--wide">
+          <label for="contact-systems" class="contact__label">
+            Current systems used <span class="contact__required" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            name="systems"
+            id="contact-systems"
+            required
+            rows="3"
+            placeholder="e.g., SAP, Salesforce, QuickBooks, Excel spreadsheets…"
+            class="contact__input contact__textarea"
+          ></textarea>
+        </div>
+
+        <!-- Biggest issue (full width) -->
+        <div class="contact__field contact__field--wide">
+          <label for="contact-issue" class="contact__label">
+            Biggest reporting or data issue <span class="contact__required" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            name="issue"
+            id="contact-issue"
+            required
+            rows="3"
+            placeholder="What's the most painful data or reporting problem your team faces today?"
+            class="contact__input contact__textarea"
+          ></textarea>
+        </div>
+
+        <!-- Message (optional, full width) -->
+        <div class="contact__field contact__field--wide">
+          <label for="contact-message" class="contact__label">
+            Anything else? <span class="contact__optional">(optional)</span>
+          </label>
+          <textarea
+            name="message"
+            id="contact-message"
+            rows="3"
+            placeholder="Any additional context or questions…"
+            class="contact__input contact__textarea"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="contact__submit-row">
+        <button type="submit" class="btn btn-primary contact__submit" id="contact-submit-btn">
+          Submit Inquiry
+        </button>
+        <p class="contact__trust-note">
+          We'll review your setup and reply personally — no automated sales sequences.
+        </p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact__header {
+    margin-bottom: var(--space-10);
+  }
+
+  .contact__form {
+    max-width: 720px;
+  }
+
+  .contact__fields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-bottom: var(--space-8);
+  }
+
+  .contact__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .contact__label {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+  }
+
+  .contact__required {
+    color: #c0392b;
+  }
+
+  .contact__optional {
+    font-weight: var(--weight-normal);
+    color: var(--color-text-muted);
+  }
+
+  .contact__input {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    transition: border-color var(--transition-fast),
+                box-shadow var(--transition-fast);
+    width: 100%;
+  }
+
+  .contact__input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+  }
+
+  .contact__input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(13, 138, 147, 0.15);
+  }
+
+  .contact__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%235F6368' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-4) center;
+    padding-right: var(--space-10);
+  }
+
+  .contact__textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .contact__submit-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .contact__submit {
+    align-self: flex-start;
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--text-base);
+  }
+
+  .contact__trust-note {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  /* ─── Two-column grid for shorter fields on larger screens ─── */
+  @media (min-width: 640px) {
+    .contact__fields {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contact__field--wide {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

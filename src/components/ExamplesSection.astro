@@ -1,0 +1,175 @@
+---
+/**
+ * ExamplesSection.astro — Illustrative engagement examples.
+ *
+ * Displays 3 detailed example cards showing what a typical engagement
+ * looks like. Clearly labeled as illustrative — not real case studies.
+ * Each card has badges, structured problem/implementation/outcome
+ * sections, and a placeholder area for future screenshots.
+ */
+import { examples } from '../data/examples';
+---
+
+<section class="examples section" id="examples" aria-labelledby="examples-heading">
+  <div class="examples__inner container">
+    <div class="examples__header">
+      <h2 class="section-heading" id="examples-heading">
+        What this looks like in practice
+      </h2>
+      <p class="section-subheading">
+        Illustrative engagement examples based on common scenarios we see with
+        growing manufacturing and commerce companies.
+      </p>
+    </div>
+
+    <div class="examples__list">
+      {examples.map((example, index) => (
+        <article class="examples__card card">
+          <!-- Badges -->
+          <div class="examples__badges">
+            {example.badges.map((badge) => (
+              <span class="examples__badge">{badge}</span>
+            ))}
+          </div>
+
+          <h3 class="examples__title">{example.title}</h3>
+
+          <p class="examples__profile">{example.profile}</p>
+
+          <div class="examples__sections">
+            <div class="examples__block">
+              <h4 class="examples__block-label">Problem</h4>
+              <p class="examples__block-text">{example.problem}</p>
+            </div>
+            <div class="examples__block">
+              <h4 class="examples__block-label">Implementation</h4>
+              <p class="examples__block-text">{example.implementation}</p>
+            </div>
+            <div class="examples__block">
+              <h4 class="examples__block-label">Outcome</h4>
+              <p class="examples__block-text">{example.outcome}</p>
+            </div>
+          </div>
+
+          <!-- Screenshot placeholder -->
+          <div class="examples__screenshot">
+            <span class="examples__screenshot-text">
+              Visual placeholder — screenshot coming soon
+            </span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .examples__header {
+    margin-bottom: var(--space-12);
+  }
+
+  .examples__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .examples__card {
+    padding: var(--space-8);
+  }
+
+  .examples__card:hover {
+    /* Override the default card hover lift — keep examples stationary. */
+    transform: none;
+  }
+
+  /* ─── Badges ─── */
+  .examples__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .examples__badge {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    color: var(--color-accent-dark);
+    background: var(--color-accent-light);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+  }
+
+  /* ─── Title & profile ─── */
+  .examples__title {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-3);
+    line-height: var(--leading-tight);
+  }
+
+  .examples__profile {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-6);
+    max-width: 72ch;
+  }
+
+  /* ─── Problem / Implementation / Outcome blocks ─── */
+  .examples__sections {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+
+  .examples__block-label {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent);
+    margin-bottom: var(--space-2);
+  }
+
+  .examples__block-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+    max-width: 72ch;
+  }
+
+  /* ─── Screenshot placeholder ─── */
+  .examples__screenshot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-alt);
+  }
+
+  .examples__screenshot-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  @media (min-width: 768px) {
+    .examples__card {
+      padding: var(--space-10);
+    }
+
+    .examples__title {
+      font-size: var(--text-2xl);
+    }
+
+    .examples__sections {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+/**
+ * ProcessSection.astro — "How the AI Data Foundation Sprint works."
+ *
+ * 5-step horizontal process flow on desktop with a connecting line
+ * between steps. Stacks vertically on mobile with a vertical line.
+ * Each step has a numbered badge, title, and description.
+ */
+import { processSteps, offerName } from '../data/offer';
+---
+
+<section class="process section" id="process" aria-labelledby="process-heading">
+  <div class="process__inner container">
+    <div class="process__header">
+      <h2 class="section-heading" id="process-heading">
+        How the {offerName} works
+      </h2>
+      <p class="section-subheading">
+        A structured engagement that takes you from messy, scattered data to a
+        trusted foundation with an AI analyst — in weeks, not months.
+      </p>
+    </div>
+
+    <div class="process__steps">
+      {processSteps.map((item, index) => (
+        <div class="process__step">
+          <div class="process__step-badge" aria-hidden="true">
+            {item.step}
+          </div>
+          {/* Connecting line between steps (not after the last step) */}
+          {index < processSteps.length - 1 && (
+            <div class="process__connector" aria-hidden="true"></div>
+          )}
+          <h3 class="process__step-title">{item.title}</h3>
+          <p class="process__step-desc">{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .process__header {
+    margin-bottom: var(--space-12);
+  }
+
+  /* ─── Mobile: vertical flow ─── */
+  .process__steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+    position: relative;
+  }
+
+  .process__step {
+    position: relative;
+    padding-left: calc(var(--space-12) + var(--space-4));
+  }
+
+  .process__step-badge {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    z-index: 1;
+  }
+
+  /* Vertical connecting line (mobile) */
+  .process__connector {
+    position: absolute;
+    left: 21px;
+    top: 44px;
+    width: 2px;
+    height: calc(var(--space-10) + 4px);
+    background: linear-gradient(to bottom, var(--color-accent), var(--color-border));
+  }
+
+  .process__step-title {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    margin-bottom: var(--space-2);
+  }
+
+  .process__step-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ─── Desktop: horizontal flow ─── */
+  @media (min-width: 1024px) {
+    .process__steps {
+      flex-direction: row;
+      gap: 0;
+    }
+
+    .process__step {
+      flex: 1;
+      padding-left: 0;
+      padding-top: calc(44px + var(--space-6));
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .process__step-badge {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+    }
+
+    .process__step-desc {
+      max-width: 22ch;
+    }
+
+    /* Horizontal connecting line (desktop) */
+    .process__connector {
+      position: absolute;
+      left: calc(50% + 26px);
+      top: 21px;
+      width: calc(100% - 52px);
+      height: 2px;
+      background: linear-gradient(to right, var(--color-accent), var(--color-border-light));
+    }
+  }
+</style>
