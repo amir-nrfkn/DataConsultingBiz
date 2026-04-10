@@ -114,9 +114,11 @@ import { hero } from '../data/offer';
   }
 
   .hero__inner {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: var(--space-12);
     align-items: center;
+    text-align: center;
   }
 
   /* ─── Content column ─── */
@@ -127,6 +129,7 @@ import { hero } from '../data/offer';
     line-height: var(--leading-tight);
     max-width: 24ch;
     margin-bottom: var(--space-6);
+    margin-inline: auto;
   }
 
   .hero__subheadline {
@@ -135,12 +138,14 @@ import { hero } from '../data/offer';
     line-height: var(--leading-relaxed);
     max-width: 48ch;
     margin-bottom: var(--space-8);
+    margin-inline: auto;
   }
 
   .hero__ctas {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-4);
+    justify-content: center;
   }
 
   /* ─── Visual column ─── */
@@ -344,7 +349,6 @@ import { hero } from '../data/offer';
 
   @media (min-width: 1024px) {
     .hero__inner {
-      grid-template-columns: 1fr 1fr;
       gap: var(--space-16);
     }
 

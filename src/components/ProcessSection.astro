@@ -39,6 +39,35 @@ import { processSteps, offerName } from '../data/offer';
   </div>
 </section>
 
+<script>
+  // Text reveal scroll animation using IntersectionObserver
+  document.addEventListener('DOMContentLoaded', () => {
+    const steps = document.querySelectorAll('.process__step');
+    
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('process__step--visible');
+            // optionally stop observing once revealed
+            // observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.2, // trigger when 20% visible
+        rootMargin: '0px 0px -10% 0px' 
+      });
+
+      steps.forEach(step => {
+        observer.observe(step);
+      });
+    } else {
+      // Fallback for older browsers
+      steps.forEach(step => step.classList.add('process__step--visible'));
+    }
+  });
+</script>
+
 <style>
   .process__header {
     margin-bottom: var(--space-12);
@@ -55,6 +84,14 @@ import { processSteps, offerName } from '../data/offer';
   .process__step {
     position: relative;
     padding-left: calc(var(--space-12) + var(--space-4));
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .process__step--visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .process__step-badge {
@@ -96,42 +133,45 @@ import { processSteps, offerName } from '../data/offer';
     line-height: var(--leading-relaxed);
   }
 
-  /* ─── Desktop: horizontal flow ─── */
+  /* ─── Desktop overrides for vertical layout ─── */
   @media (min-width: 1024px) {
-    .process__steps {
-      flex-direction: row;
-      gap: 0;
-    }
-
-    .process__step {
-      flex: 1;
-      padding-left: 0;
-      padding-top: calc(44px + var(--space-6));
+    .process__header {
       text-align: center;
+      margin-inline: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
+    .process__steps {
+      max-width: 600px;
+      margin: 0 auto;
+      padding-block: var(--space-10);
+    }
+    
+    /* On desktop, keep the vertical flow but center the line */
+    .process__step {
+      padding-left: calc(70px + var(--space-6));
+    }
+    
     .process__step-badge {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      font-size: var(--text-xl);
     }
-
-    .process__step-desc {
-      max-width: 22ch;
-    }
-
-    /* Horizontal connecting line (desktop) */
+    
     .process__connector {
-      position: absolute;
-      left: calc(50% + 26px);
-      top: 21px;
-      width: calc(100% - 52px);
-      height: 2px;
-      background: linear-gradient(to right, var(--color-accent), var(--color-border-light));
+      left: 29px;
+      top: 60px;
+      height: calc(var(--space-10) + var(--space-4));
+    }
+    
+    .process__step-title {
+      font-size: var(--text-2xl);
+    }
+    
+    .process__step-desc {
+      font-size: var(--text-base);
     }
   }
 </style>
