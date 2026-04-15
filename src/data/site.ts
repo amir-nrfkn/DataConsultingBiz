@@ -27,7 +27,7 @@ export const site = {
    * Replace with the real scheduler URL before launch. For now it falls back
    * to the on-page inquiry section so review builds keep a working path.
    */
-  bookingUrl: '#contact',
+  bookingUrl: 'https://calendly.com/amir-dev21/30min',
 
   /** Label used anywhere the primary booking CTA appears. */
   bookingLabel: 'Book a Discovery Call',

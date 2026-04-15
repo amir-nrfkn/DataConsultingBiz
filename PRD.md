@@ -915,3 +915,282 @@ Priorities in order:
 6. maintainability
 
 Make smart implementation decisions where needed, but do not drift away from the business positioning or the visual standards above.
+
+---
+
+## V2 Updates
+
+This section describes all changes to make for the second iteration of the Veylor Advisory website. The visual direction stays the same (Apple-inspired, light, premium, restrained). These updates focus on restoring missing sections, tightening the layout, updating the business offer, and polishing the UI.
+
+Changes are grouped into categories. Each change includes enough context to implement without referring back to conversation history.
+
+---
+
+### V2.1 — Restore missing homepage sections
+
+Two components exist as files but are not rendered on the homepage. Add them back.
+
+#### TrustStrip
+
+- **Component:** `src/components/TrustStrip.astro` (already built)
+- **Data:** `trustItems` in `src/data/offer.ts` (already defined)
+- **Where:** Render `<TrustStrip />` immediately after `<Hero />` in `src/pages/index.astro`
+- **Note:** The trust strip data currently says "AI-powered implementation" — this is correct. Do NOT reference Bruin in any trust strip items.
+- Update trust items to be:
+  - "Built for growing teams with 50–200 employees"
+  - "AI-powered implementation"
+  - "Deploy on AWS, GCP, or Supabase"
+  - "Works with Teams, Slack, WhatsApp"
+  - (Replace "Telegram" with "Slack" — Slack is more relevant for the target market)
+
+#### ProblemSection
+
+- **Component:** `src/components/ProblemSection.astro` (already built)
+- **Data:** `problems` in `src/data/offer.ts` (already defined, 6 cards)
+- **Where:** Render `<ProblemSection />` after `<TrustStrip />` and before `<CapabilitySection />` in `src/pages/index.astro`
+- **Import:** Add `import ProblemSection from '../components/ProblemSection.astro';` and `import TrustStrip from '../components/TrustStrip.astro';`
+
+The new homepage section order should be:
+1. Hero
+2. TrustStrip
+3. ProblemSection
+4. CapabilitySection
+5. ProcessSection
+6. ExamplesSection
+7. DeliverablesSection
+8. IdealClientSection
+9. FAQSection
+10. ContactFormSection
+
+---
+
+### V2.2 — Update pricing and offer structure
+
+The offer is changing from a single "$20K sprint" to two packages. The monthly retainer ($5K/mo) is being removed from the site entirely — it will be discussed during sales conversations.
+
+#### New package structure
+
+**Classic Package — $10,000**
+- Connect data from up to 5 sources from the approved source list (see V2.3)
+- Data warehouse setup and configuration
+- Data cleaning and standardization
+- Basic validation and quality checks
+- AI analyst deployed in one messaging channel
+- Technical handoff documentation
+
+**Enterprise Package — Custom pricing**
+- For larger companies with more complex needs
+- More than 5 data sources
+- Custom integrations beyond the approved source list
+- Advanced validation and quality rules
+- Priority support during implementation
+- Extended handoff and documentation
+- Contact us for scoping
+
+#### Implementation
+
+- Update `src/data/offer.ts`:
+  - Replace the single `pricing` object with a `packages` array containing both tiers
+  - Remove the `ongoing` and `ongoingNote` fields entirely
+  - Keep `setup` for backwards compat if needed, but the primary data should be the packages array
+- Update `src/components/DeliverablesSection.astro`:
+  - Replace the two pricing cards (setup + monthly) with two package cards (Classic + Enterprise)
+  - The Classic card shows "$10,000" with a brief feature list
+  - The Enterprise card shows "Custom" or "Let's talk" with its feature list
+  - Each card should have a CTA: Classic → "Book a Discovery Call", Enterprise → "Contact Us" (both link to the booking URL or #contact)
+  - Remove all monthly retainer references
+- The deliverables list and out-of-scope list can stay largely the same, but update the deliverables to reflect the Classic package scope and note that Enterprise expands on it
+
+#### Pricing visibility note
+
+The pricing is being included for now. If the decision is made later to hide pricing, the implementation should make it easy to toggle off (the data is in offer.ts, so simply not rendering the pricing cards would be enough).
+
+---
+
+### V2.3 — Add supported data sources list
+
+Add a visible list of supported data sources/systems to the website. This helps prospects quickly check whether their stack is compatible.
+
+#### Approved source list
+
+Include these systems (all have clean APIs or are supported via built-in ingestion tooling):
+
+**CRM & Sales:**
+- HubSpot
+- Salesforce
+- Pipedrive
+- Zoho CRM
+
+**E-commerce & Retail:**
+- Shopify
+- WooCommerce
+- BigCommerce
+- Stripe
+
+**Finance & Accounting:**
+- QuickBooks
+- Xero
+- FreshBooks
+
+**ERP & Operations:**
+- NetSuite
+- Microsoft Dynamics 365
+- Odoo
+
+**Marketing & Analytics:**
+- Google Analytics
+- Google Ads
+- Facebook Ads
+- LinkedIn Ads
+- Mailchimp
+- Klaviyo
+
+**HR & Payroll:**
+- BambooHR
+- Gusto
+- Rippling
+
+**Productivity & Data:**
+- Google Sheets
+- Airtable
+- Notion
+- Monday.com
+
+**Support & Service:**
+- Zendesk
+- Intercom
+- Freshdesk
+
+**Do NOT include:** SAP (explicitly excluded), or any system that requires heavy custom integration work.
+
+#### Implementation
+
+- Add a `dataSources` export to `src/data/offer.ts` (or a new `src/data/sources.ts` file) containing the categorized list
+- Create a new component `src/components/SourcesSection.astro` that displays the sources in a clean, scannable layout
+  - Group by category with category labels
+  - Use a compact grid/pill layout — this should not take up excessive vertical space
+  - Include a note like: "Don't see your system? We can evaluate custom connections for Enterprise engagements."
+- Place it on the homepage. Suggested position: after ProcessSection and before ExamplesSection, or integrate it into the DeliverablesSection as a sub-section. Use judgment on what flows best visually.
+- Update the FAQ answer for "Can this work with our ERP and CRM?" to reference the sources list and remove the mention of SAP
+
+---
+
+### V2.4 — Remove all Bruin references
+
+The site should not reference "Bruin" anywhere visible to users. It means nothing to the target audience.
+
+#### What to change
+
+- `src/data/offer.ts`:
+  - Change `offerName` from `'AI Data Foundation Sprint'` to `'AI Data Foundation Sprint'` (it's already been partially updated — verify no "Bruin" remains in the value)
+  - Search all string values in offer.ts for "Bruin" and replace with generic language
+- `src/components/ProcessSection.astro`: The heading uses `offerName` — verify it doesn't mention Bruin
+- `src/components/TechnologySection.astro`: This replaced the "Bruin section" — verify no Bruin references remain in its hardcoded strings
+- **Global search:** Run a grep for "Bruin" and "bruin" across all `src/` files. Replace every user-facing instance. Keep only in code comments if absolutely necessary for internal context.
+- Update `src/data/faq.ts`: Any FAQ answers mentioning Bruin should be reworded
+- Update `src/utils/schema.ts`: Check JSON-LD structured data for Bruin references
+- Update `site.ts` `defaultTitle` if it mentions Bruin (currently says "AI Data Foundation" which is fine)
+
+---
+
+### V2.5 — Booking URL placeholder for Calendly
+
+- Update `src/data/site.ts`:
+  - Change `bookingUrl` to a placeholder Calendly URL format: `'https://calendly.com/veylor-advisory/discovery'`
+  - Add a comment: `/* Replace with real Calendly link before launch */`
+- The primary CTA ("Book a Discovery Call") should open the Calendly link in a new tab when it's an external URL (this logic already exists in Header, Hero, IdealClientSection, Footer — just verify it works with the new URL)
+- The secondary CTA ("Send Your Details") should continue scrolling to #contact
+
+---
+
+### V2.6 — UI polish and layout tightening
+
+Keep the existing Apple-inspired aesthetic. These are refinements, not a redesign. Use the ui-ux-pro-max skill for detailed UI enhancement decisions.
+
+#### Process section — reduce vertical footprint
+
+The current process section (steps 01–05) takes up ~2000px of vertical space on desktop because each step is a full-width block with large headings. Tighten this:
+
+- On desktop (960px+), consider a more compact layout:
+  - Reduce the heading size for individual steps (currently `clamp(2rem, 3.6vw, 2.85rem)` — bring it down)
+  - Reduce the `process__detail` paragraph line length and font size
+  - Tighten the vertical spacing between steps
+- The timeline/marker on the left is good — keep it
+- Goal: reduce the process section's total height by roughly 30–40% on desktop without losing readability
+
+#### Hero visual — add more visual punch
+
+The hero visual (right side) currently shows source pills, a chat mockup, and stats. It works but feels slightly flat. Polish it:
+
+- Add subtle depth: slightly more contrast between the visual card background and its inner elements
+- Consider adding a subtle pulsing dot or gentle animation to the "Validated" status badge to draw attention
+- Make the chat prompt/response mockup feel slightly more like a real messaging interface
+- Keep all changes subtle and respectful of `prefers-reduced-motion`
+
+#### Example cards — visual refinement
+
+- The three example cards are large and text-heavy. Consider:
+  - Making the "highlight" text more visually prominent (it's the key takeaway)
+  - Adding subtle visual differentiation between the three cards (e.g., very slightly different accent tones or icons per industry)
+  - The badges (e.g., "Manufacturing", "120 employees") could be more visually distinct — currently they're just uppercase text with no background
+
+#### General polish items
+
+- **Section transitions:** Some sections feel like they end abruptly. Add subtle visual connectors or breathing room where sections change background color (e.g., between white and `section--alt` backgrounds)
+- **Card hover states:** Verify all interactive cards have subtle hover elevation. The problem cards, example cards, and deliverable items should all respond to hover.
+- **FAQ section:** The accordion works but feels basic. Consider adding a subtle open/close animation for the answer content (slide down, not just appear)
+- **Mobile nav:** Verify the hamburger menu animation is smooth and the mobile menu feels polished. The close-on-link-click behavior already exists — just verify timing feels right.
+- **Footer:** The footer is clean but sparse. No changes needed unless the sources section or package changes require footer nav updates.
+- **Form inputs:** The rounded inputs (16px border-radius) look good. Verify focus states are clearly visible and the select dropdowns render well across browsers.
+
+---
+
+### V2.7 — Content and copy refinements
+
+#### CTA section headline
+
+Change the current contact section headline from:
+> "Send the context and we'll review it personally"
+
+To something more action-oriented:
+> "See if your systems are ready for an AI-powered data foundation"
+
+This creates more curiosity and frames the form as a qualification step rather than just a contact form.
+
+#### Eyebrow text on contact section
+
+Change from "Prefer to start with a written brief?" to "Ready to start?"
+
+#### Update meta description and title if needed
+
+- Current title: "Veylor Advisory | AI Data Foundation for Manufacturing & Commerce" — this is good, keep it
+- Current description mentions "unify messy operational data" — update to also mention the two packages if pricing is shown
+
+---
+
+### V2.8 — TechnologySection review
+
+The TechnologySection replaced the original "Why Bruin" section. Review whether it still adds value or creates redundancy:
+
+- Currently it has "How we implement" (a capability list) and "What you get" (3 outcome cards)
+- The capability list overlaps somewhat with the ProcessSection
+- The outcome cards overlap with the CapabilitySection outcomes
+- **Decision:** Either tighten this section to be complementary (not redundant) or consider removing it and redistributing its unique content. It is currently NOT rendered on the homepage (not imported in index.astro), so this is about whether to add it back or leave it out.
+- Recommendation: Leave it out unless it can be made clearly distinct. The ProcessSection and CapabilitySection already cover the "how" and "why" well.
+
+---
+
+### V2 implementation order
+
+When implementing these changes, follow this order:
+
+1. **V2.4** — Remove Bruin references (quick grep + replace, unblocks everything)
+2. **V2.1** — Restore TrustStrip and ProblemSection (just imports + render order)
+3. **V2.5** — Update booking URL to Calendly placeholder
+4. **V2.3** — Add supported data sources list (new data + new component)
+5. **V2.2** — Update pricing and packages (data + component changes)
+6. **V2.7** — Content and copy refinements
+7. **V2.8** — TechnologySection decision
+8. **V2.6** — UI polish (use ui-ux-pro-max skill for this phase)
+
+After each step, verify the site still builds and renders correctly at `localhost:4321`.

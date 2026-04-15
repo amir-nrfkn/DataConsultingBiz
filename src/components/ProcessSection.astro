@@ -1,180 +1,142 @@
 ---
-import { processSteps, offerName } from '../data/offer';
+import { processSteps, services } from '../data/offer';
 ---
 
-<section class="process section" id="process" aria-labelledby="process-heading">
-  <div class="process__inner container">
-    <div class="process__header">
-      <span class="eyebrow">Signature engagement</span>
-      <h2 class="section-heading" id="process-heading">How the {offerName} works</h2>
-      <p class="section-subheading">
-        A structured engagement that moves from scattered source systems to one
-        trusted operating layer, with every step visible and easy to follow.
-      </p>
+<section class="services section" id="process" aria-labelledby="services-heading">
+  <div class="services__inner container">
+    <div class="services__header">
+      <h2 class="services__title" id="services-heading">Services</h2>
     </div>
 
-    <div class="process__list" role="list">
-      {processSteps.map((item) => (
-        <article class="process__step" role="listitem">
-          <div class="process__marker" aria-hidden="true">
-            <span class="process__badge">{item.step}</span>
+    <div class="services__grid">
+      {services.map((service) => (
+        <article class="services__card">
+          <div class="services__icon" aria-hidden="true">
+            {service.icon === 'pipeline' && (
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="10" cy="24" r="5" />
+                <circle cx="38" cy="12" r="5" />
+                <circle cx="38" cy="36" r="5" />
+                <path d="M15 22l18-8M15 26l18 8" />
+              </svg>
+            )}
+            {service.icon === 'automation' && (
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="14" y="14" width="20" height="20" rx="2" />
+                <path d="M24 8v6M24 34v6M8 24h6M34 24h6" />
+                <circle cx="24" cy="24" r="4" />
+              </svg>
+            )}
+            {service.icon === 'ai' && (
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="24" cy="24" r="14" />
+                <path d="M24 16v4M24 28v4M16 24h4M28 24h4" />
+                <circle cx="24" cy="24" r="6" />
+              </svg>
+            )}
           </div>
-
-          <div class="process__content">
-            <span class="process__step-label">{item.step}</span>
-            <h3>{item.title}</h3>
-            <p class="process__lead">{item.description}</p>
-            <p class="process__detail">{item.detail}</p>
-          </div>
+          <h3 class="services__card-title">{service.title}</h3>
+          <p class="services__card-desc">{service.description}</p>
         </article>
+      ))}
+    </div>
+
+    <div class="services__steps" role="list">
+      {processSteps.map((item) => (
+        <div class="services__step" role="listitem">
+          <span class="services__step-number">{item.step}.</span>
+          <span class="services__step-title">{item.title}</span>
+        </div>
       ))}
     </div>
   </div>
 </section>
 
 <style>
-  .process__header {
-    max-width: 1080px;
-    margin-bottom: clamp(2rem, 5vw, 4rem);
+  .services__header {
+    text-align: center;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
   }
 
-  .process__header .eyebrow {
-    margin-bottom: var(--space-4);
-  }
-
-  .process__list {
-    display: grid;
-    gap: var(--space-6);
-  }
-
-  .process__step {
-    display: block;
-  }
-
-  .process__marker {
-    display: none;
-  }
-
-  .process__content {
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--color-border-light);
-    background: rgba(255, 255, 255, 0.78);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .process__step-label {
-    display: inline-flex;
-    margin-bottom: var(--space-4);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-accent);
-  }
-
-  .process__content h3 {
-    font-size: clamp(1.75rem, 3vw, 2.6rem);
-    letter-spacing: -0.03em;
-    margin-bottom: var(--space-4);
-  }
-
-  .process__lead {
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  .services__title {
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.04em;
+    line-height: 0.9;
     color: var(--color-text);
-    margin-bottom: var(--space-4);
-    max-width: 30ch;
+    text-transform: uppercase;
   }
 
-  .process__detail {
+  .services__grid {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .services__card {
+    text-align: center;
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .services__icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-5);
+    color: var(--color-text-soft);
+  }
+
+  .services__card-title {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-3);
+  }
+
+  .services__card-desc {
     color: var(--color-text-muted);
-    max-width: 40ch;
-    line-height: 1.6;
+    max-width: 28ch;
+    margin-inline: auto;
+    line-height: 1.55;
   }
 
-  @media (min-width: 960px) {
-    .process__list {
-      position: relative;
-      gap: 0;
-      padding-left: 0.5rem;
+  .services__steps {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding-top: clamp(2rem, 4vw, 3rem);
+    border-top: 2px solid var(--color-text);
+  }
+
+  .services__step {
+    padding-top: var(--space-4);
+  }
+
+  .services__step-number {
+    display: block;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.03em;
+    color: var(--color-accent);
+    margin-bottom: var(--space-2);
+  }
+
+  .services__step-title {
+    display: block;
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text);
+  }
+
+  @media (min-width: 640px) {
+    .services__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .process__list::before {
-      content: '';
-      position: absolute;
-      left: 1.7rem;
-      top: 1.9rem;
-      bottom: 1.9rem;
-      width: 2px;
-      border-radius: var(--radius-full);
-      background: rgba(29, 29, 31, 0.14);
+    .services__steps {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 
-    .process__step {
-      position: relative;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: clamp(1.5rem, 3vw, 2.25rem);
-      align-items: start;
-      padding-bottom: clamp(2rem, 4vw, 2.75rem);
-    }
-
-    .process__step:last-child {
-      padding-bottom: 0;
-    }
-
-    .process__marker {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      width: 3.5rem;
-      z-index: 1;
-    }
-
-    .process__badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 50%;
-      border: 1px solid rgba(29, 29, 31, 0.16);
-      background: rgba(255, 255, 255, 0.98);
-      color: var(--color-text);
-      font-size: 1.35rem;
-      font-weight: var(--weight-semibold);
-      letter-spacing: -0.03em;
-      box-shadow: 0 16px 36px -28px rgba(6, 24, 44, 0.32);
-    }
-
-    .process__content {
-      padding: 0.2rem 0 0;
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      border-radius: 0;
-      max-width: 54rem;
-    }
-
-    .process__step-label {
-      display: none;
-    }
-
-    .process__content h3 {
-      font-size: clamp(2rem, 3.6vw, 2.85rem);
-      margin-bottom: var(--space-2);
-    }
-
-    .process__lead {
-      font-size: clamp(1.15rem, 1.8vw, 1.35rem);
-      margin-bottom: var(--space-2);
-      max-width: 42rem;
-    }
-
-    .process__detail {
-      font-size: var(--text-lg);
-      max-width: 50rem;
-      color: var(--color-text-muted);
+    .services__step {
+      border-top: none;
     }
   }
 </style>

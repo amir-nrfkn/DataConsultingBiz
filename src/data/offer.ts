@@ -13,7 +13,7 @@ export const hero = {
   headline:
     'Build the data foundation your reporting and AI can finally rely on.',
   subheadline:
-    'Veylor Advisory connects, cleans, and validates the systems already running your business so leadership gets trusted numbers without spreadsheet reconciliation.',
+    'We connect, clean, and validate the systems running your business so leadership gets trusted numbers — no spreadsheet reconciliation.',
   ctaPrimary: 'Book a Discovery Call',
   ctaSecondary: 'Send Your Details',
   highlights: [
@@ -37,41 +37,41 @@ export const proofIntro = {
   eyebrow: 'Why this changes the business',
   title: 'A clean data foundation fixes more than reporting.',
   description:
-    'When ERP, CRM, finance, operations, and spreadsheet logic finally line up, leadership can move faster and internal AI becomes usable instead of risky.',
+    'When your systems finally line up, leadership moves faster and internal AI becomes usable.',
   outcomes: [
     {
       title: 'Faster reporting',
       description:
-        'Teams stop rebuilding the weekly narrative by hand and start reviewing decisions sooner.',
+        'Automated workflows replace manual spreadsheet assembly.',
     },
     {
       title: 'One trusted number set',
       description:
-        'Finance, operations, and leadership work from the same definitions instead of reconciling conflicting exports.',
+        'Every team works from the same definitions.',
     },
     {
       title: 'Cleaner internal AI',
       description:
-        'Questions in Slack, Teams, or WhatsApp resolve against validated data instead of fragmented source systems.',
+        'AI answers grounded in validated data, not fragmented exports.',
     },
     {
       title: 'Less spreadsheet firefighting',
       description:
-        'Critical business logic moves out of brittle analyst workbooks and into repeatable pipelines with checks.',
+        'Business logic moves into repeatable pipelines with checks.',
     },
   ],
   comparison: {
     beforeTitle: 'Before',
     beforeItems: [
-      'Reporting depends on manual exports and spreadsheet stitching',
-      'Leadership sees different numbers from different teams',
-      'AI experiments stall because the source data is unreliable',
+      'Manual exports and spreadsheet stitching',
+      'Different numbers from different teams',
+      'AI stalls on unreliable source data',
     ],
     afterTitle: 'After',
     afterItems: [
-      'Core systems feed one validated operating layer',
-      'Metrics mean the same thing across finance, ops, and commercial teams',
-      'Teams can ask practical business questions against trusted data',
+      'Core systems feed one validated layer',
+      'Metrics mean the same thing everywhere',
+      'Teams ask business questions against trusted data',
     ],
   },
 } as const;
@@ -80,16 +80,35 @@ export const proofIntro = {
 
 export const offerName = 'AI Data Foundation Sprint' as const;
 
+/* ─── Services shown in the services grid ─── */
+
+export const services = [
+  {
+    title: 'Data Pipelines',
+    description: 'Connect your existing systems into one reliable, automated data flow.',
+    icon: 'pipeline',
+  },
+  {
+    title: 'Automation',
+    description: 'Replace manual reporting and spreadsheet tasks with repeatable workflows.',
+    icon: 'automation',
+  },
+  {
+    title: 'AI Analytics',
+    description: 'Ask business questions in plain language and get answers from validated data.',
+    icon: 'ai',
+  },
+] as const;
+
 /* ─── What the sprint delivers ─── */
 
 export const deliverables = [
-  'Connect up to 3–5 core systems across finance, operations, commercial, and spreadsheet workflows',
-  'Clean and standardize the data so the same metric means the same thing everywhere',
-  'Add validation and quality checks that catch missing fields, duplicates, and bad links automatically',
-  'Centralize the cleaned output in one trusted data layer',
-  'Deploy an AI analyst in one internal messaging channel',
-  'Add one simple internal form or structured input workflow if needed',
-  'Provide technical handoff documentation for ongoing ownership',
+  'Connect 3–5 core systems (ERP, CRM, finance, spreadsheets)',
+  'Clean and standardize data so metrics mean the same thing everywhere',
+  'Automated validation and quality checks',
+  'One centralized, trusted data layer',
+  'AI analyst deployed in your messaging channel',
+  'Technical handoff documentation',
 ] as const;
 
 /* ─── What is out of scope ─── */
@@ -159,43 +178,23 @@ export const problems = [
 export const processSteps = [
   {
     step: '01',
-    title: 'Connect core systems',
-    description:
-      'We map the systems actually driving reporting today and connect the highest-leverage data sources first.',
-    detail:
-      'ERP, CRM, finance tools, operational logs, and key spreadsheet workflows are pulled into one delivery path instead of living in separate exports.',
+    title: 'Explore current setup',
   },
   {
     step: '02',
-    title: 'Clean and standardize',
-    description:
-      'Raw data is cleaned, deduplicated, and normalized so shared metrics have one definition across the business.',
-    detail:
-      'Names, IDs, timestamps, and business rules are brought into alignment so finance, commercial, and operations teams stop working from competing interpretations.',
+    title: 'Determine a solution',
   },
   {
     step: '03',
-    title: 'Add checks and validation',
-    description:
-      'Automated checks catch the failures that normally surface only after a leadership meeting starts.',
-    detail:
-      'Missing fields, duplicate records, broken joins, stale updates, and mismatched references are flagged before they flow into reporting or AI answers.',
+    title: 'Build and validate',
   },
   {
     step: '04',
-    title: 'Centralize trusted data',
-    description:
-      'Validated outputs land in one trusted operating layer your team can rely on.',
-    detail:
-      'This becomes the stable foundation under reporting, analysis, and future automation work instead of another fragile transformation chain.',
+    title: 'Hand over and train',
   },
   {
     step: '05',
-    title: 'Deploy AI-powered analyst',
-    description:
-      'An AI analyst is deployed into your messaging channel so your team can ask business questions in plain language.',
-    detail:
-      'Teams get fast answers inside Slack, Teams, or WhatsApp, grounded in the validated data layer rather than ad hoc spreadsheets.',
+    title: 'Continued support',
   },
 ] as const;
 
@@ -203,12 +202,11 @@ export const processSteps = [
 
 export const fitCriteria = [
   '$1M+ ARR with growing operational complexity',
-  '50–200 employees across finance, operations, and commercial teams',
-  'Manufacturing, distribution, or modern commerce workflows',
-  'Multiple disconnected tools across ERP, CRM, finance, and spreadsheets',
-  'No dedicated internal data architecture function',
-  'Manual, slow, or inconsistent reporting for leadership',
-  'A real interest in practical internal AI, not experimentation theater',
+  '50–200 employees across multiple teams',
+  'Manufacturing, distribution, or commerce',
+  'Multiple disconnected tools (ERP, CRM, spreadsheets)',
+  'No dedicated data architecture function',
+  'Manual or inconsistent reporting',
 ] as const;
 
 /* ─── Trust strip items ─── */
@@ -249,7 +247,7 @@ export const technologyOutcomes = [
 
 export const closeCta = {
   eyebrow: 'Two ways to start',
-  title: 'Book a call if you want to talk scope. Send details if you want us to review the situation first.',
+  title: 'Book a call or send your details.',
   description:
-    'The booking path is the fastest route. The inquiry form is there if you prefer to share context before scheduling.',
+    'Book a call to talk scope, or use the form to share context first.',
 } as const;
