@@ -119,15 +119,15 @@ export const outOfScope = [
   'Major ERP or CRM reconfiguration projects',
   'Large-scale historical cleanup or reconstruction',
   'Enterprise change management or training programs',
-  '24/7 support or enterprise SLA support',
+  '24/7 support or enterprise SLA support'
 ] as const;
 
 /* ─── Pricing ─── */
 
 export const pricing = {
-  setup: 'Starting at $20,000',
-  ongoing: '$5,000/month',
-  ongoingNote: 'ongoing monitoring & maintenance as needed',
+  setup: 'Starting at $10,000',
+  ongoing: 'Available upon request',
+  ongoingNote: 'Ongoing monitoring & maintenance as needed',
   setupLabel: 'Sprint engagement',
   supportLabel: 'Ongoing support',
 } as const;
