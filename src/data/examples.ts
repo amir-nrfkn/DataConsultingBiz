@@ -29,11 +29,11 @@ export const examples: EngagementExample[] = [
     profile:
       'A 120-employee manufacturer with over $8M ARR pulling numbers from ERP, production spreadsheets, purchasing exports, and manually updated QA logs.',
     problem:
-      'Operations, finance, and leadership all had different numbers. The weekly production report took nearly a full day to prepare, and no one trusted scrap, output, or late-order figures without manual checking.',
+      'Operations, finance, and leadership all had conflicting numbers, turning weekly reporting into a full-day manual exercise.',
     implementation:
-      'Connected ERP, production spreadsheets, QA logs, and purchasing data into one operating layer. Standardized order, production, and product records. Added quality checks for missing fields, duplicates, and mismatched order IDs. Deployed an AI analyst in Microsoft Teams and added a structured downtime capture form for supervisors.',
+      'Connected their ERP, spreadsheets, and QA logs into one operating layer with built-in data quality checks.',
     outcome:
-      'Reporting moved from manual spreadsheet assembly to a mostly automated workflow. Leadership got one trusted set of numbers, and managers could ask operational questions directly in Teams.',
+      'Leadership gained one trusted set of numbers, and managers now ask operational questions directly in Teams.',
     badges: ['Manufacturing', '120 employees', '$8M+ ARR'],
     highlight: 'Weekly reporting shifted from a full-day exercise to a trusted operating rhythm.',
   },
@@ -42,11 +42,11 @@ export const examples: EngagementExample[] = [
     profile:
       'A 75-employee commerce company doing roughly $5M ARR using Shopify, HubSpot, ad platform exports, QuickBooks, and spreadsheets.',
     problem:
-      'Leadership could not get clean answers to questions like CAC by channel, profitability by product, why finance and marketing reports did not match, and what changed week over week.',
+      'Leadership struggled with mismatched finance and marketing reports, making CAC and profitability hard to track.',
     implementation:
-      'Connected Shopify, HubSpot, ad data, and finance data into one central repository. Standardized customer, order, campaign, and revenue data. Added validation for duplicate customers, refunds, attribution gaps, and missing campaign tags. Deployed an AI analyst into Slack and added a lightweight form for campaign notes and promotions.',
+      'Unified Shopify, HubSpot, ad platforms, and finance data into a central, validated revenue dataset.',
     outcome:
-      'The company moved from fragmented channel reporting to one trusted commercial dataset. Leadership got faster answers on revenue, marketing efficiency, and product performance, and commercial teams could query the AI analyst inside Slack.',
+      'Commercial decisions now rely on one consistent revenue story, and teams query data directly in Slack.',
     badges: ['Commerce', '75 employees', '$5M ARR'],
     highlight: 'Commercial decisions shifted from stitched exports to one consistent revenue story.',
   },
@@ -55,11 +55,11 @@ export const examples: EngagementExample[] = [
     profile:
       'A 160-employee distributor and service business with $12M+ ARR using a CRM, ERP, service logs, and spreadsheet-based field updates.',
     problem:
-      'Sales, operations, and service teams each had partial visibility. Managers struggled to answer questions about overdue jobs, customers with both open service issues and unpaid invoices, fulfillment bottlenecks, and underperforming regions.',
+      'Fragmented visibility across sales, operations, and service left managers chasing updates across different tools.',
     implementation:
-      'Connected CRM, ERP, service logs, and spreadsheet field updates into one trusted data layer. Standardized customer IDs, service references, invoice statuses, and territory mappings. Added checks for broken cross-system links, stale job records, and missing updates. Deployed an AI analyst into WhatsApp and built a mobile-friendly form for field staff to submit structured service updates.',
+      'Connected their CRM, ERP, and field service logs into one shared data layer with standardized metrics.',
     outcome:
-      'The business gained a shared operational view across service, sales, and fulfillment. Managers stopped chasing updates across tools, and the company created a practical foundation for more reliable reporting and future automation.',
+      'The business established a shared operational view, allowing teams to rely on one source of truth for updates.',
     badges: ['Distribution & Services', '160 employees', '$12M+ ARR'],
     highlight: 'Operational blind spots across teams gave way to one shared view of execution.',
   },

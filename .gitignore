@@ -30,3 +30,8 @@ CLAUDE.md
 
 # Testing
 sandbox/
+
+logs/runs
+logs/*.log
+__pycache__/
+*.py[cod]

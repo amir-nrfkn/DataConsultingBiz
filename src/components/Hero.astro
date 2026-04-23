@@ -23,8 +23,11 @@ const isExternalBooking = site.bookingUrl.startsWith('http');
         >
           {site.bookingLabel}
         </a>
-        <a href="#contact" class="btn btn-secondary">{hero.ctaSecondary}</a>
+        <p class="hero__cta-alt">
+          Not ready? <a href="#contact">Send your details instead</a>
+        </p>
       </div>
+
 
       <ul class="hero__highlights" role="list">
         {hero.highlights.map((item) => (
@@ -92,9 +95,26 @@ const isExternalBooking = site.bookingUrl.startsWith('http');
 
   .hero__ctas {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-4);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__cta-alt {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .hero__cta-alt a {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+
+  .hero__trust-proof {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-soft);
     margin-bottom: var(--space-6);
   }
 

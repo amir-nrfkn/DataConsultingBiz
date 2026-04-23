@@ -11,15 +11,6 @@ import { proofIntro } from '../data/offer';
         <p class="section-subheading">{proofIntro.description}</p>
       </div>
 
-      <div class="capability__outcomes">
-        {proofIntro.outcomes.map((item) => (
-          <article class="capability__outcome">
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-          </article>
-        ))}
-      </div>
-
       <div class="capability__comparison">
         <div class="capability__column">
           <span class="capability__column-label">{proofIntro.comparison.beforeTitle}</span>
@@ -57,30 +48,6 @@ import { proofIntro } from '../data/offer';
 
   .capability__intro .eyebrow {
     margin-bottom: var(--space-4);
-  }
-
-  .capability__outcomes {
-    display: grid;
-    gap: var(--space-4);
-    margin-bottom: clamp(2rem, 5vw, 3.5rem);
-  }
-
-  .capability__outcome {
-    padding: var(--space-6);
-    border-radius: var(--radius-lg);
-    background: rgba(255, 255, 255, 0.62);
-    border: 1px solid var(--color-border-light);
-  }
-
-  .capability__outcome h3 {
-    font-size: var(--text-xl);
-    letter-spacing: -0.02em;
-    margin-bottom: var(--space-3);
-  }
-
-  .capability__outcome p {
-    color: var(--color-text-muted);
-    max-width: 34ch;
   }
 
   .capability__comparison {

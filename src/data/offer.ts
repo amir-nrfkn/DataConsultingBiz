@@ -11,9 +11,9 @@
 export const hero = {
   eyebrow: 'For CEOs and operators who need one version of the truth',
   headline:
-    'Build the data foundation your reporting and AI can finally rely on.',
+    'One trusted number set. For every team, every report, every AI.',
   subheadline:
-    'We connect, clean, and validate the systems running your business so leadership gets trusted numbers — no spreadsheet reconciliation.',
+    'For 50–200 person manufacturers, distributors, and commerce teams who\'ve outgrown spreadsheets.',
   ctaPrimary: 'Book a Discovery Call',
   ctaSecondary: 'Send Your Details',
   highlights: [
@@ -38,28 +38,6 @@ export const proofIntro = {
   title: 'A clean data foundation fixes more than reporting.',
   description:
     'When your systems finally line up, leadership moves faster and internal AI becomes usable.',
-  outcomes: [
-    {
-      title: 'Faster reporting',
-      description:
-        'Automated workflows replace manual spreadsheet assembly.',
-    },
-    {
-      title: 'One trusted number set',
-      description:
-        'Every team works from the same definitions.',
-    },
-    {
-      title: 'Cleaner internal AI',
-      description:
-        'AI answers grounded in validated data, not fragmented exports.',
-    },
-    {
-      title: 'Less spreadsheet firefighting',
-      description:
-        'Business logic moves into repeatable pipelines with checks.',
-    },
-  ],
   comparison: {
     beforeTitle: 'Before',
     beforeItems: [
@@ -125,7 +103,7 @@ export const outOfScope = [
 /* ─── Pricing ─── */
 
 export const pricing = {
-  setup: 'Starting at $10,000',
+  setup: '$10K–$25K depending on system count',
   ongoing: 'Available upon request',
   ongoingNote: 'Ongoing monitoring & maintenance as needed',
   setupLabel: 'Sprint engagement',

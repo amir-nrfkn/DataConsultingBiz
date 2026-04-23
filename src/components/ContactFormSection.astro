@@ -14,7 +14,7 @@ const isExternalBooking = site.bookingUrl.startsWith('http');
       </p>
       <a
         href={site.bookingUrl}
-        class="contact__booking-link"
+        class="btn btn-primary contact__booking-btn"
         target={isExternalBooking ? '_blank' : undefined}
         rel={isExternalBooking ? 'noreferrer' : undefined}
       >
@@ -83,63 +83,6 @@ const isExternalBooking = site.bookingUrl.startsWith('http');
           />
         </div>
 
-        <div class="contact__field">
-          <label for="contact-size" class="contact__label">
-            Company size <span class="contact__required" aria-hidden="true">*</span>
-          </label>
-          <select name="company-size" id="contact-size" required class="contact__input contact__select">
-            <option value="" disabled selected>Select range</option>
-            <option value="1-49">1–49 employees</option>
-            <option value="50-100">50–100 employees</option>
-            <option value="101-200">101–200 employees</option>
-            <option value="201-500">201–500 employees</option>
-            <option value="500+">500+ employees</option>
-          </select>
-        </div>
-
-        <div class="contact__field">
-          <label for="contact-industry" class="contact__label">
-            Industry <span class="contact__required" aria-hidden="true">*</span>
-          </label>
-          <select name="industry" id="contact-industry" required class="contact__input contact__select">
-            <option value="" disabled selected>Select industry</option>
-            <option value="manufacturing">Manufacturing</option>
-            <option value="ecommerce">E-commerce / DTC</option>
-            <option value="retail">Retail</option>
-            <option value="distribution">Distribution / Wholesale</option>
-            <option value="services">Professional Services</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <div class="contact__field">
-          <label for="contact-phone" class="contact__label">
-            Phone <span class="contact__optional">(optional)</span>
-          </label>
-          <input
-            type="tel"
-            name="phone"
-            id="contact-phone"
-            autocomplete="tel"
-            placeholder="+1 (555) 000-0000"
-            class="contact__input"
-          />
-        </div>
-
-        <div class="contact__field contact__field--wide">
-          <label for="contact-systems" class="contact__label">
-            Current systems used <span class="contact__required" aria-hidden="true">*</span>
-          </label>
-          <textarea
-            name="systems"
-            id="contact-systems"
-            required
-            rows="3"
-            placeholder="e.g. Stripe, Meta Ads, Shopify, QuickBooks, Excel spreadsheets…"
-            class="contact__input contact__textarea"
-          ></textarea>
-        </div>
-
         <div class="contact__field contact__field--wide">
           <label for="contact-issue" class="contact__label">
             Biggest reporting or data issue <span class="contact__required" aria-hidden="true">*</span>
@@ -150,19 +93,6 @@ const isExternalBooking = site.bookingUrl.startsWith('http');
             required
             rows="3"
             placeholder="What is the most painful data or reporting problem your team faces today?"
-            class="contact__input contact__textarea"
-          ></textarea>
-        </div>
-
-        <div class="contact__field contact__field--wide">
-          <label for="contact-message" class="contact__label">
-            Anything else? <span class="contact__optional">(optional)</span>
-          </label>
-          <textarea
-            name="message"
-            id="contact-message"
-            rows="3"
-            placeholder="Any additional context or questions…"
             class="contact__input contact__textarea"
           ></textarea>
         </div>
@@ -192,12 +122,8 @@ const isExternalBooking = site.bookingUrl.startsWith('http');
     margin-bottom: var(--space-4);
   }
 
-  .contact__booking-link {
-    display: inline-flex;
+  .contact__booking-btn {
     margin-top: var(--space-4);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-    align-self: center;
   }
 
   .contact__form {
